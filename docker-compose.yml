@@ -4,6 +4,7 @@ services:
   backend-blue:
     image: gitlab.praktikum-services.ru:5050/std-009-047/momo-store/momo-backend:latest
     container_name: momo-backend-blue
+    hostname: backend
     env_file:
       - .backend.env
     healthcheck:
@@ -18,6 +19,7 @@ services:
   backend-green:
     image: gitlab.praktikum-services.ru:5050/std-009-047/momo-store/momo-backend:latest
     container_name: momo-backend-green
+    hostname: backend
     env_file:
       - .backend.env
     healthcheck:
