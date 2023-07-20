@@ -1,0 +1,47 @@
+version: "3.4"
+
+services:
+  backend-blue:
+    image: gitlab.praktikum-services.ru:5050/std-009-047/momo-store/momo-backend:latest
+    container_name: momo-backend-blue
+    env_file:
+      - .backend.env
+    healthcheck:
+      test: curl --fail -s http://localhost:8081/health/
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 6
+    networks:
+      - momo_network
+
+  backend-green:
+    image: gitlab.praktikum-services.ru:5050/std-009-047/momo-store/momo-backend:latest
+    container_name: momo-backend-green
+    env_file:
+      - .backend.env
+    healthcheck:
+      test: curl --fail -s http://localhost:8081/health/
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 6
+    networks:
+      - momo_network
+
+  frontend:
+    image: gitlab.praktikum-services.ru:5050/std-009-047/momo-store/momo-frontend:latest
+    container_name: momo-frontend
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx.tmpl:/app/nginx.tmpl
+    environment:
+      - DEFAULT_HOST=momo-backend
+    networks:
+      - momo_network
+
+networks:
+  sausage_network:
+    driver: bridge
