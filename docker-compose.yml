@@ -43,5 +43,5 @@ services:
       - momo_network
 
 networks:
-  sausage_network:
+  momo_network:
     driver: bridge
