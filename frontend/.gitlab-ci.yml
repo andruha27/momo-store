@@ -63,9 +63,10 @@ deploy-frontend:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - ssh-keyscan -H ${DEV_HOST} >> ~/.ssh/known_hosts
-    - 'echo {"auths": {"gitlab.praktikum-services.ru:5050": {"auth": "${DOCKER_SECRET}"}}, "credHelpers": {"container-registry.cloud.yandex.net": "ycr", "cr.cloud.yandex.net": "ycr", "cr.yandex": "ycr"	}} > ~/.docker/config.json'
     - chmod 644 ~/.ssh/known_hosts
   script:
+    - 'echo {"auths": {"gitlab.praktikum-services.ru:5050": {"auth": "${DOCKER_SECRET}"}}, "credHelpers": {"container-registry.cloud.yandex.net": "ycr", "cr.cloud.yandex.net": "ycr", "cr.yandex": "ycr"	}} > config.json'
+    - scp ./config.json ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/.docker/config.json
     - scp ./docker-compose.yml ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/docker-compose.yml
     - scp ./frontend/nginx.tmpl ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/nginx.tmpl
     - ssh ${DEV_USER}@${DEV_HOST}
