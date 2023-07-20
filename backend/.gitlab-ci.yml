@@ -65,7 +65,8 @@ deploy-backend:
     - ssh-keyscan -H ${DEV_HOST} >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - 'echo ''{"auths": {"gitlab.praktikum-services.ru:5050": {"auth": "${DOCKER_SECRET}"}}, "credHelpers": {"container-registry.cloud.yandex.net": "ycr", "cr.cloud.yandex.net": "ycr", "cr.yandex": "ycr"	}}'' > config.json'
+    - 'echo ''{"auths": {"gitlab.praktikum-services.ru:5050": {"auth": "#DOCKER_SECRET#"}}, "credHelpers": {"container-registry.cloud.yandex.net": "ycr", "cr.cloud.yandex.net": "ycr", "cr.yandex": "ycr"	}}'' > config.json'
+    - sed -i 's/#DOCKER_SECRET#/$DOCKER_SECRET/g' config.json
     - scp ./config.json ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/.docker/config.json
     - scp ./docker-compose.yml ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/docker-compose.yml
     - ssh ${DEV_USER}@${DEV_HOST}
