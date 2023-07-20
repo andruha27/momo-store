@@ -33,3 +33,9 @@ variable "image_id" {
   type        = string
   default     = ""
 }
+
+variable "pubkey" {
+  description = "public key"
+  type        = string
+  default     = ""
+}

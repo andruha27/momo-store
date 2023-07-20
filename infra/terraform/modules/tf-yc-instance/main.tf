@@ -23,9 +23,8 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   metadata = {
-    user-data = "${file("userdata.yaml")}"
-    #ssh-keys = "ubuntu:${file("~/.ssh/id_rsa_ed25519.pub")}"
-
+    user-data = templatefile("userdata.yaml", {pubkey=var.pubkey})
+	boba = var.pubkey
   }
 
 }

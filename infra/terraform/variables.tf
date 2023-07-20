@@ -21,3 +21,9 @@ variable "zone" {
   type        = string
   default     = ""
 }
+
+variable "pubkey" {
+  description = "public key"
+  type        = string
+  default     = ""
+}

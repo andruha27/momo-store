@@ -6,6 +6,7 @@ module "tf-yc-instance" {
   core_count   = 2
   instance_subnet_id = module.tf-yc-network.yandex_vpc_subnets[var.zone].id
   memory_value = 4 
+  pubkey = var.pubkey
 }
 
 module "tf-yc-network" {
