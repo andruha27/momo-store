@@ -25,7 +25,7 @@ go test -v ./...
 Перед созданием инфраструктуры создайте или приготовьте пару ключей. Публичный ключ нужно передать в терраформ, 
 приватный ключ записать в переменные Gitlab.
 
-`terraform apply -var="token=<Token>" -var="folder_id=<Folder id>" -var="zone=<Zone id>" -var="<publicKey>"`
+`terraform apply -var="token=<Token>" -var="folder_id=<Folder id>" -var="zone=<Zone id>" -var="pubkey=<publicKey>"`
 
 Полученный публичный IP необходимо внести в CI/CD Variables в GitLab, для того, чтобы на созданную виртуальную машину происходил деплой.
 
