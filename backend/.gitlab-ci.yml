@@ -63,6 +63,7 @@ deploy-backend:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - ssh-keyscan -H ${DEV_HOST} >> ~/.ssh/known_hosts
+    - echo "${DOCKER_CONFIG}" > ~/.docker/config.json
     - chmod 644 ~/.ssh/known_hosts
   script:
     - scp ./docker-compose.yml ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/docker-compose.yml

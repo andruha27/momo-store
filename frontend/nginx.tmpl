@@ -13,14 +13,15 @@ server {
 
   listen 80;
 
-  location / {
-    root   /usr/share/nginx/html;
+  location / {    
+	root   /usr/src/app/static/momo-store;
     index  index.html;
     try_files $uri $uri/ /index.html;
   }
 
-  location /api {
-      proxy_pass http://{{ $host }};
+  location ~ (/products|auth|categories)
+  {
+    proxy_pass    http://{{ $host }};
   }
 }
 {{ end }}
