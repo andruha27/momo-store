@@ -41,6 +41,7 @@ build-backend-container:
     - test-backend-code-job
 
 container_scanning:
+  stage: build
   variables:
     CS_IMAGE: $CI_REGISTRY_IMAGE/momo-backend:$CI_COMMIT_SHA
   needs:
