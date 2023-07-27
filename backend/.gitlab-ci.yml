@@ -1,6 +1,7 @@
 stages:
-  - test
+  - test-code
   - build
+  - test-container
   - release
   - deploy
 include:
@@ -13,7 +14,7 @@ variables:
     JAVA_OPTS: -XX:MaxRAMPercentage=90 # для того, чтобы Maven не съел всю свободную оперативку
 
 test-backend-code-job:
-  stage: test
+  stage: test-code
   image: golang:1.17
   script:
     - cd backend
@@ -41,7 +42,7 @@ build-backend-container:
     - test-backend-code-job
 
 container_scanning:
-  stage: build
+  stage: test-container
   variables:
     CS_IMAGE: $CI_REGISTRY_IMAGE/momo-backend:$CI_COMMIT_SHA
   needs:
