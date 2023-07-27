@@ -1,6 +1,6 @@
 stages:
-  - build
   - test
+  - build
   - release
   - deploy
 include:
@@ -11,7 +11,14 @@ variables:
     VERSION: 1.0.${CI_PIPELINE_ID}
     MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
     JAVA_OPTS: -XX:MaxRAMPercentage=90 # для того, чтобы Maven не съел всю свободную оперативку
-     
+
+test-backend-code-job:
+  stage: test
+  image: golang:1.17
+  script:
+    - cd backend
+    - go test -v ./...
+    
 build-backend-container:
   only:
     changes:
@@ -30,6 +37,8 @@ build-backend-container:
       --tag $CI_REGISTRY_IMAGE/momo-backend:$CI_COMMIT_SHA
       .
     - docker push $CI_REGISTRY_IMAGE/momo-backend:$CI_COMMIT_SHA
+  needs:
+    - test-backend-code-job
 
 container_scanning:
   variables:
