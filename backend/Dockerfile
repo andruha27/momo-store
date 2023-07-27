@@ -17,7 +17,6 @@ RUN go mod download
 # Copy the source from the current directory to the Working Directory inside the container
 COPY . .
 
-RUN apk --no-cache add curl
 
 # Build the Go app
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api ./cmd/api
@@ -26,6 +25,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api ./cmd/api
 FROM alpine:latest
 
 WORKDIR /root
+
+RUN apk --no-cache add curl
 
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /app/api .
